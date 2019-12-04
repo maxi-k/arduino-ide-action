@@ -25,7 +25,7 @@ async function run() {
       arduino_usr = home + path_delimiter + arduino_usr;
     }
 
-    console.log(`IDE_PATH: ${arduino_ide}, USR_PATH: ${arduino_usr}, OS_TYPE: ${os_type}, OS_ARCH: ${os_arch}`)
+    console.log(`IDE_PATH: ${arduino_ide}, USR_PATH: ${arduino_usr}, IDE_VERSION: ${ide_version}, OS_TYPE: ${os_type}, OS_ARCH: ${os_arch}`)
 
     var arduino_archive = "linux64.tar.xz";
     if (os_type === "win32"){
