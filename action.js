@@ -9,6 +9,7 @@ async function run() {
   try { 
     const ide_path = core.getInput('ide_path');
     const usr_path = core.getInput('usr_path');
+    const ide_version = core.getInput('ide_version');
     const os_type = process.platform;
     const os_arch = process.arch;
     const home = (os_type === "win32")?(process.env['HOMEDRIVE'] + process.env['HOMEPATH']):process.env['HOME'];
@@ -32,13 +33,14 @@ async function run() {
     } else if(os_type === "darwin"){
       arduino_archive = "macosx.zip";
     }
-    const ide_url = `https://www.arduino.cc/download.php?f=/arduino-nightly-${arduino_archive}`;
+    const ide_file_name = "arduino-" + ide_version;
+    const ide_url = `https://www.arduino.cc/download.php?f=/${ide_file_name}-${arduino_archive}`;
     const archive = await tc.downloadTool(ide_url);
 
     if (os_type === "linux"){
       await io.mv(archive, 'arduino.tar.xz');
       await exec.exec('tar', ['xf', 'arduino.tar.xz']);
-      await io.mv('arduino-nightly', arduino_ide);
+      await io.mv(ide_file_name, arduino_ide);
       await io.rmRF('arduino.tar.xz');
     } else {
       await io.mv(archive, 'arduino.zip');
@@ -50,7 +52,7 @@ async function run() {
         arduino_ide += "/Contents/Java"
       } else {
         const arduino_unzip = await tc.extractZip('arduino.zip', 'arduino_unzip');
-        await io.cp(arduino_unzip + path_delimiter + "arduino-nightly", arduino_ide, { recursive: true, force: false });
+        await io.cp(arduino_unzip + path_delimiter + ide_file_name, arduino_ide, { recursive: true, force: false });
         await io.rmRF(arduino_unzip);
       }
       await io.rmRF('arduino.zip');

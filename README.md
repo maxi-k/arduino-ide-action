@@ -15,6 +15,7 @@ jobs:
         with:
           ide_path: arduino-ide # optional: relative to $HOME or absolute. default: $HOME/arduino-ide
           usr_path: Arduino # optional: relative to $HOME or absolute. default: $HOME/Arduino
+          ide_version: nightly # optional: version of the arduino IDE to download. default: nightly 
 
 ...
     - run: |
